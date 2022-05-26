@@ -6,8 +6,11 @@
 package com.mycompany.proyectocomplejidad;
 
 public class ProyectoComplejidad {
+    static int n =10; //Hay que tomar n desde la interfaz
+    static public String informacion;
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Interfaz i = new Interfaz();
+        i.setVisible(true);
     }
 }
