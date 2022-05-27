@@ -1,6 +1,7 @@
 package com.mycompany.proyectocomplejidad;
 
 import static com.mycompany.proyectocomplejidad.ProyectoComplejidad.informacion;
+import static javax.management.Query.value;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -13,8 +14,11 @@ import static com.mycompany.proyectocomplejidad.ProyectoComplejidad.informacion;
  */
 public class Interfaz extends javax.swing.JFrame {
     static String info;
+    static String info2;
     static String total;
     String[] informacion;
+    static int nKm;
+    static int numCiudades;
     
     public Interfaz() {
         initComponents();
@@ -103,13 +107,16 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         info = jTextArea1.getText();
- 
-        System.out.println(info);
+        info = info.replace("\n", ",");
+        informacion = info.split(",");
+        for (int i = 0; i < informacion.length; i++){
+            System.out.println(informacion[i]);
+        };
+        nKm=Integer.parseInt(informacion[0]);
+        numCiudades= Integer.parseInt(informacion[1]);
+      
         Interfaz i = new Interfaz();
-        i.variables();
-        i.restriccionesDeVariables(10);
-        i.funcionManhattan();
-        total = i.variables() + "\n" + i.restriccionesDeVariables(10) + "\n" + i.funcionManhattan();
+        total = i.variables() + "\n" + i.restriccionesDeVariables(nKm) + "\n" + i.funcionManhattan();
         System.out.println(total);
         jTextField1.setText(total);
 
