@@ -38,7 +38,8 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,51 +56,52 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane2.setViewportView(jTextArea2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(59, 59, 59)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(155, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(141, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(171, 171, 171))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(192, 192, 192)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,35 +110,79 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         info = jTextArea1.getText();
         info = info.replace("\n", ",");
+        info = info.replace(" ", ",");
+        
+        
         informacion = info.split(",");
         for (int i = 0; i < informacion.length; i++){
-            System.out.println(informacion[i]);
+           // System.out.println(informacion[i]);
         };
+        
         nKm=Integer.parseInt(informacion[0]);
         numCiudades= Integer.parseInt(informacion[1]);
-      
+        String arrayAux[];
+        String matrizCiudades[][];
+        
+        matrizCiudades = crearMatriz(numCiudades);
+        arrayAux = funcionVariable(matrizCiudades);
         Interfaz i = new Interfaz();
-        total = i.variables() + "\n" + i.restriccionesDeVariables(nKm) + "\n" + i.funcionManhattan();
-        System.out.println(total);
-        jTextField1.setText(total);
+        total = i.variables() + "\n" + i.restriccionesDeVariables(nKm) + "\n" + i.funcionManhattan() + "\n" + i.solve(arrayAux) + "\n" + "output[\"x = \", show(x), \"y = \", show(y)];";
+        solve(arrayAux);
+        jTextArea2.setText(total);
 
     }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
     
     public String variables(){
         return "var int: x;" + "\n" + "var int: y;";
     }
     
     public String restriccionesDeVariables(int n){
-        return "constraint x >= 0;" + "\n" + "constraint y >= 0;" + "\n" + "constraint x <=" + n + ";" + "\n" + "constraint y >=" + n + ";";
+        return "constraint x >= 0;" + "\n" + "constraint y >= 0;" + "\n" + "constraint x <=" + n + ";" + "\n" + "constraint y <=" + n + ";";
         
     }
     
      public String funcionManhattan(){
-         return "function var int: manhattan(var int: x1, var int: y1,var int: x2, var int: y2) = abs(x1 - x2) + abs(y1 - y2);";
+         return "function var int: manhattan(var int: x1, var int: y1,var int: x2, var int: y2)" + "\n" + "= abs(x1 - x2) + abs(y1 - y2);";
+    }
+     
+     public String[] funcionVariable(String matrizCiudades[][]){
+         String arrayAux[];
+         arrayAux = new String[matrizCiudades.length];
+         for(int i = 0; i < matrizCiudades.length; i++ ){           
+             arrayAux[i]="manhattan(" + matrizCiudades[i][1] + "," + matrizCiudades[i][2] + "," + "x,y)";
+             System.err.println("hola");
+             System.err.println(arrayAux[i]);
+         }
+         
+         return arrayAux;
+    }
+     
+    public String[][] crearMatriz(int n){
+        String matriz[][];
+        int count =2;
+        matriz = new String[numCiudades][3];
+        for(int i = 0; i < n; i++ ){
+            for(int j= 0; j<3 ; j++ ){
+                matriz[i][j]= informacion[count];
+                count++;
+                System.out.println(matriz[i][j]);
+            }
+        }
+        
+        return matriz;
+    }
+    
+    public String solve(String array[]){
+        String solve = "solve minimize ";
+        for(int i = 0; i < array.length; i++){
+            solve= solve + array[i]; 
+            if(i+1 != array.length){
+                solve = solve + " + \n";
+            }else {solve = solve + ";";}
+        }
+        System.err.println(solve);
+        return solve;
+        //"solve minimize" + "variable1" + "variable2" + ";"
     }
    
     public static void main(String args[]) {
@@ -176,7 +222,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }
