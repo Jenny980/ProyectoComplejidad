@@ -15,6 +15,7 @@ _• Las siguientes M líneas contienen la ubicación de las ciudades. El primer
 _12_
 
 _5_
+
 _Palmira 2 3_
 
 _Cali 10 2_
