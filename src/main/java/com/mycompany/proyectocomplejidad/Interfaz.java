@@ -27,16 +27,16 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
     String[] informacion;
     static int nKm;
     static int numCiudades;
-    private JPanel pan;
+    private JPanel plano;
     
     public Interfaz() {
         initComponents();
         
-        pan =new Plano();
-        pan.setLocation(675,200);
-        pan.setSize(450,450);
-        pan.setBackground(Color.white);
-        jPanel1.add(pan);
+        plano =new Plano(10,450,"");
+        plano.setLocation(675,200);
+        plano.setSize(450,450);
+        plano.setBackground(Color.white);
+        jPanel1.add(plano);
     }
     
     /**
