@@ -1,13 +1,12 @@
 package com.mycompany.proyectocomplejidad;
 
-import static com.mycompany.proyectocomplejidad.ProyectoComplejidad.informacion;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.io.IOException;
-import static javax.management.Query.value;
+import com.mycompany.proyectocomplejidad.FuncionesDispersion;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -121,7 +120,7 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
@@ -153,9 +152,7 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +181,7 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
         nKm=Integer.parseInt(informacion[0]);
         //número de ciudades para la entrada
         numCiudades= Integer.parseInt(informacion[1]);
-        
+  
         // se instancia la matriz de ciudades.
         matrizCiudades = crearMatriz(numCiudades);
         //se instancian los nombres de las variables de distancia.
@@ -192,8 +189,9 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
         // se generan las líneas de código para las variables
         arrayInstanciasManhattan = funcionVariable(matrizCiudades);
         
+        FuncionesDispersion f = new FuncionesDispersion(matrizCiudades);
         Interfaz i = new Interfaz();
-        total =   "%Constantes\n" + i.constantes() + "\n"
+        total =   "%Constantes\n" + i.constantes(f.dispersionXY) + "\n"
                 + "%Posición academia\n" + i.variables() + "\n" 
                 + "%Distancias de ciudades a la academias\n" 
                 + instanciaDeDistancias(arrayInstanciasManhattan, arrayNombreVar) + "\n" 
@@ -218,10 +216,10 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
         openMinizinc();
     }//GEN-LAST:event_jButton3ActionPerformed
     
-    public String constantes(){
+    public String constantes(int d){
         return "int: M ="+ numCiudades + "; %Número de ciudades." +"\n" 
                 + "int: N ="+ nKm + "; %tamaño del area cuadrada NxN;"  +"\n"
-                + "int: d ="+ "5" + "; %desviación estandar. Necesaria para el mínimo de distancia" +"\n";
+                + "int: d ="+ d + "; %desviación estandar. Necesaria para el mínimo de distancia" +"\n";
     }
     
     public String variables(){
@@ -255,13 +253,15 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
     public String restriccionesDeArea(int n){
         return "constraint x >= 0;\n"
              + "constraint y >= 0;\n" 
-             + "constraint x <=" + n + ";\n"
-             + "constraint y <=" + n + ";\n";
+             + "constraint x <=N;\n"
+             + "constraint y <=N;\n";
     }
     
     public String restriccionesDeDesigualdad(){
         String aux= "constraint forall(i in 1..M)(\n" +
-                    "    distancias[i] >= d\n"
+                    "  forall(j in 1..M)(\n" +
+                    "    distancias[i] <= distancias[j]+d\n" +
+                    "  )\n"
                     + ");\n";
         return aux;
     }
