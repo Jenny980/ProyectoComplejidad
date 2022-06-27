@@ -363,8 +363,7 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
             String[] parametros = new String[2];
             
             parametros[0] = "C:\\Program Files\\MiniZinc\\MiniZincIDE.exe";
-            parametros[1] = System.getProperty("user.dir"); 
-            System.out.print(System.getProperty("user.dir"));
+            parametros[1] = System.getProperty("user.dir") + "\\Prueba.mzn"; 
             Process proceso = Runtime.getRuntime().exec(parametros, null);
             
             proceso.waitFor();
