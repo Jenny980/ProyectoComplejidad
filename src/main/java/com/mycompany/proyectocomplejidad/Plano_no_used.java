@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
-public class Plano extends JPanel {
+public class Plano_no_used extends JPanel {
     
     //variables de entrada:
     public int N;
@@ -21,7 +21,7 @@ public class Plano extends JPanel {
     //circulos que representan las ciudades, a partir del tamaño del cuadrado del plano.
     public double diametro_relativo;
     
-    Plano(int N, int limiteHV, String matrizCiudades){
+    Plano_no_used(int N, int limiteHV, String matrizCiudades){
         this.N =N;
         this.limiteHV = limiteHV;
         //this.matrizCiudades = matrizCiudades;
