@@ -12,5 +12,6 @@ public class ProyectoComplejidad {
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
         i.setVisible(true);
+        i.setResizable(false);
     }
 }

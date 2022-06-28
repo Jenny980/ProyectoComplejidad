@@ -6,7 +6,6 @@ import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.io.IOException;
-import com.mycompany.proyectocomplejidad.FuncionesDispersion;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -103,35 +102,36 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel2))
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(123, 123, 123)
+                        .addComponent(jLabel1)))
                 .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(128, 128, 128))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(34, 34, 34)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,16 +189,12 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
         // se generan las líneas de código para las variables
         arrayInstanciasManhattan = funcionVariable(matrizCiudades);
         
-        FuncionesDispersion f = new FuncionesDispersion(matrizCiudades);
         Interfaz i = new Interfaz();
-        total =   "%Constantes\n" + i.constantes(f.dispersionXY) + "\n"
+        total =   "%Constantes\n" + i.constantes() + "\n"
                 + "%Posición academia\n" + i.variables() + "\n" 
                 + "%Distancias de ciudades a la academias\n" 
                 + instanciaDeDistancias(arrayInstanciasManhattan, arrayNombreVar) + "\n" 
-                + "%Arreglo de las distancias de las ciudades:\n" 
-                + arregloDeDistancias(arrayNombreVar) + "\n" 
                 + "%Restricciones de Área\n" + i.restriccionesDeArea(nKm) + "\n" 
-                + "%Restricciones de desigualdad\n" + restriccionesDeDesigualdad() + "\n"
                 + "%Función Manhattan\n" + i.funcionManhattan() + "\n" 
                 + "%z = suma de distancias\n" + i.z(arrayNombreVar) + "\n" 
                 + "%%función objetivo, minimizar z.\nsolve minimize z;\n\n" 
@@ -216,10 +212,9 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
         openMinizinc();
     }//GEN-LAST:event_jButton3ActionPerformed
     
-    public String constantes(int d){
+    public String constantes(){
         return "int: M ="+ numCiudades + "; %Número de ciudades." +"\n" 
-                + "int: N ="+ nKm + "; %tamaño del area cuadrada NxN;"  +"\n"
-                + "int: d ="+ d + "; %desviación estandar. Necesaria para el mínimo de distancia" +"\n";
+                + "int: N ="+ nKm + "; %tamaño del area cuadrada NxN;"  +"\n";
     }
     
     public String variables(){
@@ -235,35 +230,11 @@ public class Interfaz extends javax.swing.JFrame implements ClipboardOwner{
         return aux;
     }
     
-    public String arregloDeDistancias(String arrayNombreVar[]){
-        String aux = "";
-        for(int i = 0; i < arrayNombreVar.length; i++){
-            if(i==0){
-                aux += "array[1..M] of var int: distancias =\n"
-                      +"[" + arrayNombreVar[i] + "\n";
-            }else if(i==(arrayNombreVar.length-1)){
-                aux+= "," + arrayNombreVar[i] + "];\n";
-            }else{
-                aux+= "," + arrayNombreVar[i] + "\n";
-            }
-        }
-        return aux;
-    }
-    
     public String restriccionesDeArea(int n){
         return "constraint x >= 0;\n"
              + "constraint y >= 0;\n" 
              + "constraint x <=N;\n"
              + "constraint y <=N;\n";
-    }
-    
-    public String restriccionesDeDesigualdad(){
-        String aux= "constraint forall(i in 1..M)(\n" +
-                    "  forall(j in 1..M)(\n" +
-                    "    distancias[i] <= distancias[j]+d\n" +
-                    "  )\n"
-                    + ");\n";
-        return aux;
     }
     
     public String funcionManhattan(){
